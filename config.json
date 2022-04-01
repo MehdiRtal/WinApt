@@ -1,46 +1,51 @@
 {
+    "spotify": {
+        "version": "",
+        "installer": "custom",
+        "arguments": "/extract \"C:\\Program Files\\Spotify\""
+    },
     "anydesk": {
-        "version": "7.0.4",
+        "version": "",
         "installer": "custom",
         "arguments": "--install \"C:\\Program Files (x86)\\AnyDesk\" --silent --create-desktop-icon --create-shortcuts --start-with-win"
     },
     "7zip-64": {
-        "version": "19.00",
+        "version": "",
         "installer": "custom",
         "arguments": "/S"
     },
     "whatsapp-64": {
-        "version": "2.2108.8",
+        "version": "",
         "installer": "custom",
         "arguments": "-s"
     },
     "discord": {
-        "version": "1.0.9003",
+        "version": "",
         "installer": "custom",
         "arguments": "-s"
     },
     "vlc-media-player-64": {
-        "version": "3.0.12",
+        "version": "",
         "installer": "custom",
         "arguments": "/S"
     },
     "winscp": {
-        "version": "5.19.4",
+        "version": "",
         "installer": "custom",
         "arguments": "/VERYSILENT /NORESTART /ALLUSERS"
     },
     "sharex": {
-        "version": "13.6.1",
+        "version": "",
         "installer": "custom",
         "arguments": "/VERYSILENT /NORESTART /NORUN"
     },
     "open-broadcaster-software": {
-        "version": "27.1.3",
+        "version": "",
         "installer": "custom",
         "arguments": "/S"
     },
     "virtualbox": {
-        "version": "6.1.30",
+        "version": "",
         "installer": "custom",
         "arguments": "--silent --ignore-reboot"
     },
@@ -49,12 +54,12 @@
         "installer": "msi"
     },
     "microsoft-powertoys": {
-        "version": "0.51.1",
+        "version": "",
         "installer": "custom",
         "arguments": "/install /quiet /norestart"
     },
     "qbittorrent-64": {
-        "version": "4.3.4.1",
+        "version": "",
         "installer": "custom",
         "arguments": "/S"
     }
