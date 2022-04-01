@@ -35,7 +35,7 @@ for id in data:
     installer(id)
   else:
     data[id]["version"] = version(id)
-    open("config.json", "w").json.dump(data, f, indent = 4)
+    json.dump(data, open("config.json", "w"), indent = 4)
     if os.path.exists("cache/" + file_name(id)):
         os.remove("cache/" + file_name(id))
     wget.download(download_link(id), "cache/")
