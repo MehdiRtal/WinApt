@@ -4,6 +4,7 @@ import json
 import re
 import os
 from bs4 import BeautifulSoup
+from urllib.parse import urlparse
 
 with open("config.json", "r") as f:
   data = json.load(f)
@@ -12,6 +13,8 @@ def download_link(arg):
   url = requests.get("https://filehippo.com/download_{}/post_download/".format(arg)).text
   soup = BeautifulSoup(url, "lxml")
   download_link = soup.find("script", {"type": "text/javascript", "data-qa-download-url": True})["data-qa-download-url"]
+  if arg == "spotify":
+    return "https://download.spotify.com/SpotifyFullSetup.exe"
   return download_link
 
 def version(arg):
@@ -21,8 +24,7 @@ def version(arg):
   return version
 
 def file_name(arg):
-  file_name = download_link(arg).split("&Filename=", 1)[1]
-  return file_name
+  return os.path.basename(urlparse(download_link(arg)).path)
 
 def installer(arg):
   if data[arg]["installer"] == "custom":
@@ -40,4 +42,3 @@ for id in data:
         os.remove("cache/" + file_name(id))
     wget.download(download_link(id), "cache/")
     installer(id)
-    
