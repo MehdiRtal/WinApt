@@ -31,6 +31,14 @@ def installer(arg):
     os.system("cmd /c start cache/{} {}".format(file_name(arg), data[arg]["arguments"]))
   if data[arg]["installer"] == "msi":
     os.system("cmd /c msiexec /i cache/{} /qn /norestart".format(file_name(arg)))
+  if data[arg]["installer"] == "innosetup":
+    os.system("cmd /c start cache/{} /VERYSILENT /NORESTART".format(file_name(arg)))
+  if data[arg]["installer"] == "installshield":
+    os.system("cmd /c start cache/{} /s".format(file_name(arg)))
+  if data[arg]["installer"] == "nsis":
+    os.system("cmd /c start cache/{} /S".format(file_name(arg)))
+  if data[arg]["installer"] == "squirrel":
+    os.system("cmd /c start cache/{} -s".format(file_name(arg)))
 
 for id in data:
   if data[id]["version"] == version(id):
@@ -42,3 +50,4 @@ for id in data:
         os.remove("cache/" + file_name(id))
     wget.download(download_link(id), "cache/")
     installer(id)
+    
