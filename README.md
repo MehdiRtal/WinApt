@@ -1,4 +1,4 @@
-# Epic Games Claimer
+# FileHippoInstaller
 ## Description
 Download and Install or Update Multiple Apps at Once.
 
