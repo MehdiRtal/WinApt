@@ -3,6 +3,7 @@ import wget
 import json
 import re
 import os
+import argparse
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 
@@ -14,7 +15,7 @@ def download_link(arg):
   soup = BeautifulSoup(url, "lxml")
   download_link = soup.find("script", {"type": "text/javascript", "data-qa-download-url": True})["data-qa-download-url"]
   if arg == "spotify":
-    return "https://download.spotify.com/SpotifyFullSetup.exe"
+    download_link = "https://download.spotify.com/SpotifyFullSetup.exe"
   return download_link
 
 def version(arg):
@@ -41,7 +42,7 @@ def installer(arg):
     os.system("cmd /c start cache/{} -s".format(file_name(arg)))
 
 for id in data:
-  if data[id]["version"] == version(id):
+  if data[id]["version"] == version(id) and os.path.exists("cache/" + file_name(id)):
     installer(id)
   else:
     data[id]["version"] = version(id)
