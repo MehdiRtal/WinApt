@@ -1,4 +1,4 @@
-# File Hippo Installer
+# Universal Installer
 ## Description
 Download and Install or Update Multiple Apps at Once.
 
