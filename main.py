@@ -3,7 +3,6 @@ import wget
 import json
 import re
 import os
-import argparse
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 
@@ -27,7 +26,7 @@ def version(arg):
 def file_name(arg):
   return os.path.basename(urlparse(download_link(arg)).path)
 
-def installer(arg):
+def install(arg):
   if data[arg]["installer"] == "custom":
     os.system("cmd /c start cache/{} {}".format(file_name(arg), data[arg]["arguments"]))
   if data[arg]["installer"] == "msi":
@@ -41,14 +40,20 @@ def installer(arg):
   if data[arg]["installer"] == "squirrel":
     os.system("cmd /c start cache/{} -s".format(file_name(arg)))
 
-for id in data:
-  if data[id]["version"] == version(id) and os.path.exists("cache/" + file_name(id)):
-    installer(id)
-  else:
-    data[id]["version"] = version(id)
-    json.dump(data, open("config.json", "w"), indent = 4)
-    if os.path.exists("cache/" + file_name(id)):
+def main():
+  for id in data:
+    if data[id]["version"] == version(id) and os.path.exists("cache/" + file_name(id)):
+      print("Installing {}...".format(id))
+      install(id)
+    else:
+      data[id]["version"] = version(id)
+      json.dump(data, open("config.json", "w"), indent = 4)
+      if os.path.exists("cache/" + file_name(id)):
         os.remove("cache/" + file_name(id))
-    wget.download(download_link(id), "cache/")
-    installer(id)
-    
+      print("Downloading {}...".format(id))
+      wget.download(download_link(id), "cache/")
+      print("\nInstalling {}...".format(id))
+      install(id)
+
+if __name__ == "__main__":
+    main()
