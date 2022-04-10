@@ -3,8 +3,15 @@ import wget
 import json
 import re
 import os
+import argparse
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-d", "--download", action="store_true")
+parser.add_argument("-q", "--quiet", action="store_true")
+args = parser.parse_args()
+folder_name = "cache/"
 
 with open("config.json", "r") as f:
   data = json.load(f)
@@ -23,10 +30,17 @@ def version(arg):
   version = "".join(re.findall("\d|[.]", soup.find("p", class_="program-header-inline__version").text))
   return version
 
-def file_name(arg):
-  return os.path.basename(urlparse(download_link(arg)).path)
+def download(arg):
+  if args.quiet:
+    wget.download(download_link(arg), folder_name, bar=None)
+  else:
+    print("\nDownloading {}...".format(arg))
+    wget.download(download_link(arg), folder_name)
+    print("\n")
 
 def install(arg):
+  if not args.quiet:
+    print("\nInstalling {}...".format(arg))
   if data[arg]["installer"] == "custom":
     os.system("cmd /c start cache/{} {}".format(file_name(arg), data[arg]["arguments"]))
   if data[arg]["installer"] == "msi":
@@ -40,20 +54,28 @@ def install(arg):
   if data[arg]["installer"] == "squirrel":
     os.system("cmd /c start cache/{} -s".format(file_name(arg)))
 
-def main():
+def file_name(arg):
+  return os.path.basename(urlparse(download_link(arg)).path)
+
+def file_path(arg):
+  return folder_name + file_name(arg)
+
+def deploy():
   for id in data:
-    if data[id]["version"] == version(id) and os.path.exists("cache/" + file_name(id)):
-      print("Installing {}...".format(id))
-      install(id)
+    if args.download:
+      if os.path.exists(file_path(id)):
+        os.remove(file_path(id))
+      download(id)
     else:
-      data[id]["version"] = version(id)
-      json.dump(data, open("config.json", "w"), indent = 4)
-      if os.path.exists("cache/" + file_name(id)):
-        os.remove("cache/" + file_name(id))
-      print("Downloading {}...".format(id))
-      wget.download(download_link(id), "cache/")
-      print("\nInstalling {}...".format(id))
-      install(id)
+      if data[id]["version"] == version(id) and os.path.exists(file_path(id)):
+        install(id)
+      else:
+        data[id]["version"] = version(id)
+        json.dump(data, open("config.json", "w"), indent = 4)
+        if os.path.exists(file_path(id)):
+          os.remove(file_path(id))
+        download(id)
+        install(id)
 
 if __name__ == "__main__":
-    main()
+  deploy()
