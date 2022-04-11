@@ -1,6 +1,6 @@
-# Universal Installer
+# WinApt
 ## Description
-Download and Install or Update Multiple Apps at Once.
+Have you ever wished that you could update all of the free software on your computer at once? Well now you can. WinApt is the free open source package manager for Windows.
 
 ## Requirements
  * [Python](https://www.python.org/downloads/)
