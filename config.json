@@ -14,7 +14,7 @@
         "installer": "nsis"
     },
     "whatsapp-64": {
-        "version": ",
+        "version": "",
         "installer": "squirrel"
     },
     "discord": {
