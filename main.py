@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 
 parser = argparse.ArgumentParser()
+parser.add_argument("package", nargs="+")
 parser.add_argument("-d", "--download", action="store_true")
 parser.add_argument("-q", "--quiet", action="store_true")
 args = parser.parse_args()
@@ -61,21 +62,23 @@ def file_path(arg):
   return folder_name + file_name(arg)
 
 def deploy():
-  for id in data:
-    if args.download:
-      if os.path.exists(file_path(id)):
-        os.remove(file_path(id))
-      download(id)
+  for id, package in zip(data, args.package):
+    if id != package:
+      print("{} package not found.".format(package))
+    elif args.download:
+        if data[id]["version"] != version(id) and os.path.exists(file_path(package)):
+          os.remove(file_path(package))
+        download(package)
     else:
-      if data[id]["version"] == version(id) and os.path.exists(file_path(id)):
-        install(id)
+      if data[id]["version"] == version(id) and os.path.exists(file_path(package)):
+        install(package)
       else:
         data[id]["version"] = version(id)
         json.dump(data, open("config.json", "w"), indent = 4)
-        if os.path.exists(file_path(id)):
-          os.remove(file_path(id))
-        download(id)
-        install(id)
+        if os.path.exists(file_path(package)):
+          os.remove(file_path(package))
+        download(package)
+        install(package)
 
 if __name__ == "__main__":
   deploy()
