@@ -63,17 +63,17 @@ def file_path(arg):
 
 def deploy():
   for id, package in zip(data, args.package):
-    if id != package:
+    if package not in data:
       print("{} package not found.".format(package))
     elif args.download:
-        if data[id]["version"] != version(id) and os.path.exists(file_path(package)):
+        if data[package]["version"] != version(package) and os.path.exists(file_path(package)):
           os.remove(file_path(package))
         download(package)
     else:
-      if data[id]["version"] == version(id) and os.path.exists(file_path(package)):
+      if data[package]["version"] == version(package) and os.path.exists(file_path(package)):
         install(package)
       else:
-        data[id]["version"] = version(id)
+        data[package]["version"] = version(package)
         json.dump(data, open("config.json", "w"), indent = 4)
         if os.path.exists(file_path(package)):
           os.remove(file_path(package))
