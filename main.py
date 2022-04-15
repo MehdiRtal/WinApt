@@ -37,7 +37,6 @@ def download(arg):
   else:
     print("\nDownloading {}...".format(arg))
     wget.download(download_link(arg), folder_name)
-    print("\n")
 
 def install(arg):
   if not args.quiet:
@@ -62,12 +61,12 @@ def file_path(arg):
   return folder_name + file_name(arg)
 
 def deploy():
-  for id, package in zip(data, args.package):
+  for package in data and args.package:
     if package not in data:
-      print("{} package not found.".format(package))
+      if not args.quiet:
+        print("\n{} not found.".format(package))
     elif args.download:
-        if data[package]["version"] != version(package) and os.path.exists(file_path(package)):
-          os.remove(file_path(package))
+      if data[package]["version"] == version(package) and os.path.exists(file_path(package)):
         download(package)
     else:
       if data[package]["version"] == version(package) and os.path.exists(file_path(package)):
