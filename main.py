@@ -14,7 +14,7 @@ parser.add_argument("-q", "--quiet", action="store_true")
 args = parser.parse_args()
 folder_name = "cache/"
 
-with open("config.json", "r") as f:
+with open("packages.json", "r") as f:
   data = json.load(f)
 
 def download_link(arg):
@@ -62,22 +62,25 @@ def file_path(arg):
 
 def deploy():
   for package in data and args.package:
-    if package not in data:
-      if not args.quiet:
-        print("\n{} not found.".format(package))
-    elif args.download:
-      if data[package]["version"] == version(package) and os.path.exists(file_path(package)):
+    try:
+      if args.download:
+        os.remove(file_path(package))
         download(package)
-    else:
-      if data[package]["version"] == version(package) and os.path.exists(file_path(package)):
-        install(package)
       else:
-        data[package]["version"] = version(package)
-        json.dump(data, open("config.json", "w"), indent = 4)
-        if os.path.exists(file_path(package)):
-          os.remove(file_path(package))
-        download(package)
-        install(package)
+        if data[package]["version"] == version(package) and os.path.exists(file_path(package)):
+          install(package)
+        else:
+          data[package]["version"] = version(package)
+          json.dump(data, open("packages.json", "w"), indent = 4)
+          if os.path.exists(file_path(package)):
+            os.remove(file_path(package))
+          download(package)
+          install(package)
+    except:
+      if args.quiet:
+        pass
+      else:
+        print("\n{} not found.".format(package))
 
 if __name__ == "__main__":
   deploy()
