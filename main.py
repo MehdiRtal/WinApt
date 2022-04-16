@@ -10,7 +10,7 @@ from urllib.parse import urlparse
 parser = argparse.ArgumentParser()
 parser.add_argument("package", nargs="+")
 parser.add_argument("-d", "--download", action="store_true")
-parser.add_argument("-q", "--quiet", action="store_true")
+parser.add_argument("-q", "--quiet", action="store_false")
 args = parser.parse_args()
 folder_name = "cache/"
 
@@ -33,13 +33,13 @@ def version(arg):
 
 def download(arg):
   if args.quiet:
-    wget.download(download_link(arg), folder_name, bar=None)
-  else:
     print("\nDownloading {}...".format(arg))
     wget.download(download_link(arg), folder_name)
+  else:
+    wget.download(download_link(arg), folder_name, bar=None)
 
 def install(arg):
-  if not args.quiet:
+  if args.quiet:
     print("\nInstalling {}...".format(arg))
   if data[arg]["installer"] == "custom":
     os.system("cmd /c start cache/{} {}".format(file_name(arg), data[arg]["arguments"]))
@@ -78,9 +78,9 @@ def deploy():
           install(package)
     except:
       if args.quiet:
-        pass
-      else:
         print("\n{} not found.".format(package))
+      else:
+        pass
 
 if __name__ == "__main__":
   deploy()
