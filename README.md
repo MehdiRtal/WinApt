@@ -1,6 +1,6 @@
 # WinApt
 
-<img src="https://github.com/MehdiRtal/WinApt/blob/main/misc/cube.png" align="right" width="200" height="200"/>
+<img src="misc/cube.png" align="right" width="200" height="200"/>
 
 _The simple package installer for Windows_
 
