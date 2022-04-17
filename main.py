@@ -6,22 +6,18 @@ import os
 import argparse
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
-from jsonschema import validate
 
 parser = argparse.ArgumentParser()
 parser.add_argument("package", nargs="+")
 parser.add_argument("-d", "--download", action="store_true")
 parser.add_argument("-q", "--quiet", action="store_false")
 args = parser.parse_args()
+
+if not os.path.exists("packages.json"):
+  wget.download("https://raw.githubusercontent.com/MehdiRtal/WinApt/main/packages.json", bar=None)
+data = json.load(open("packages.json", "r"))
+
 folder_name = "cache/"
-
-with open("packages.json", "r") as f:
-  data = json.load(f)
-
-with open("schema.json", "r") as f:
-  schema = json.load(f)
-
-validate(instance=data, schema=schema)
 
 def download_link(arg):
   url = requests.get("https://filehippo.com/download_{}/post_download/".format(arg)).text
@@ -30,7 +26,6 @@ def download_link(arg):
   if arg == "spotify":
     download_link = "https://download.spotify.com/SpotifyFullSetup.exe"
   return download_link
-
 def version(arg):
   url = requests.get("https://filehippo.com/download_{}/post_download/".format(arg)).text
   soup = BeautifulSoup(url, "lxml")
@@ -73,15 +68,16 @@ def deploy():
         os.remove(file_path(package))
         download(package)
       else:
-        if data[package]["version"] == version(package) and os.path.exists(file_path(package)):
-          install(package)
-        else:
-          data[package]["version"] = version(package)
-          json.dump(data, open("packages.json", "w"), indent = 4)
-          if os.path.exists(file_path(package)):
-            os.remove(file_path(package))
-          download(package)
-          install(package)
+          if "version" not in data:
+            data[package]["version"] = version(package)
+          json.dump(data, open("packages.json", "w"), indent = 2)
+          if data[package]["version"] == version(package) and os.path.exists(file_path(package)):
+            install(package)
+          else:
+            if os.path.exists(file_path(package)):
+              os.remove(file_path(package))
+            download(package)
+            install(package)
     except:
       if args.quiet:
         print("\n{} not found.".format(package))
