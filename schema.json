@@ -1,0 +1,232 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+	"type": "object",
+	"properties": {
+		"spotify": {
+			"type": "object",
+			"properties": {
+				"version": {
+					"type": "string"
+				},
+				"installer": {
+					"type": "string"
+				},
+				"arguments": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"version",
+				"installer",
+				"arguments"
+			]
+		},
+		"anydesk": {
+			"type": "object",
+			"properties": {
+				"version": {
+					"type": "string"
+				},
+				"installer": {
+					"type": "string"
+				},
+				"arguments": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"version",
+				"installer",
+				"arguments"
+			]
+		},
+		"7zip-64": {
+			"type": "object",
+			"properties": {
+				"version": {
+					"type": "string"
+				},
+				"installer": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"version",
+				"installer"
+			]
+		},
+		"whatsapp-64": {
+			"type": "object",
+			"properties": {
+				"version": {
+					"type": "string"
+				},
+				"installer": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"version",
+				"installer"
+			]
+		},
+		"discord": {
+			"type": "object",
+			"properties": {
+				"version": {
+					"type": "string"
+				},
+				"installer": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"version",
+				"installer"
+			]
+		},
+		"vlc-media-player-64": {
+			"type": "object",
+			"properties": {
+				"version": {
+					"type": "string"
+				},
+				"installer": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"version",
+				"installer"
+			]
+		},
+		"winscp": {
+			"type": "object",
+			"properties": {
+				"version": {
+					"type": "string"
+				},
+				"installer": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"version",
+				"installer"
+			]
+		},
+		"sharex": {
+			"type": "object",
+			"properties": {
+				"version": {
+					"type": "string"
+				},
+				"installer": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"version",
+				"installer"
+			]
+		},
+		"open-broadcaster-software": {
+			"type": "object",
+			"properties": {
+				"version": {
+					"type": "string"
+				},
+				"installer": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"version",
+				"installer"
+			]
+		},
+		"virtualbox": {
+			"type": "object",
+			"properties": {
+				"version": {
+					"type": "string"
+				},
+				"installer": {
+					"type": "string"
+				},
+				"arguments": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"version",
+				"installer",
+				"arguments"
+			]
+		},
+		"libre-office": {
+			"type": "object",
+			"properties": {
+				"version": {
+					"type": "string"
+				},
+				"installer": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"version",
+				"installer"
+			]
+		},
+		"microsoft-powertoys": {
+			"type": "object",
+			"properties": {
+				"version": {
+					"type": "string"
+				},
+				"installer": {
+					"type": "string"
+				},
+				"arguments": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"version",
+				"installer",
+				"arguments"
+			]
+		},
+		"qbittorrent-64": {
+			"type": "object",
+			"properties": {
+				"version": {
+					"type": "string"
+				},
+				"installer": {
+					"type": "string"
+				}
+			},
+			"required": [
+				"version",
+				"installer"
+			]
+		}
+	},
+	"required": [
+		"spotify",
+		"anydesk",
+		"7zip-64",
+		"whatsapp-64",
+		"discord",
+		"vlc-media-player-64",
+		"winscp",
+		"sharex",
+		"open-broadcaster-software",
+		"virtualbox",
+		"libre-office",
+		"microsoft-powertoys",
+		"qbittorrent-64"
+	]
+}
