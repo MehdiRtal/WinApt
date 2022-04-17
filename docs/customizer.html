@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Just-install customizer allows you to create a unattended and automated installer to install applications. Choose the apps you would like to install, and click Download Installer. The installer will always remain up to date, and it will start installing the programs automatically when you open it.">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Just-Install Customizer</title>
+    <title>WinApt Customizer</title>
     <style>
         * {
             box-sizing: border-box;
@@ -212,7 +212,7 @@
     </noscript>
     <div class="app">
         <header class="app__header">
-            <div class="app__header__title">just-install</div>
+            <div class="app__header__title">WinApt</div>
             <div class="app__header__apps">
                 <span v-for="(pkg, i) in selections"><span v-if="i > 0">, </span><span href="javascript:void(0);" class="app__header__apps__app" @click="toggle(pkg)">{{pkg}}</span></span>
             </div>
