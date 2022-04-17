@@ -8,17 +8,19 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("package", nargs="*", help="Download and Install a package")
-parser.add_argument("-d", "--download", action="store_true", help="Install a package only")
-parser.add_argument("-q", "--quiet", action="store_false", help="Execute silently")
-parser.add_argument("-l", "--list", action="store_true", help="List Available Packages")
+parser.add_argument("package", nargs="*", help="Download and install a package")
+parser.add_argument("-all", action="store_true", help="Download and install all packages")
+parser.add_argument("-l", "--list", action="store_true", help="List available packages")
+parser.add_argument("-q", "--quiet", action="store_false", help="Quiet mode")
 args = parser.parse_args()
 
-if not os.path.exists("packages.json"):
-  wget.download("https://raw.githubusercontent.com/MehdiRtal/WinApt/main/packages.json", bar=None)
-data = json.load(open("packages.json", "r"))
+folder_name = "%temp%/WinApt/"
+if not os.path.exists(folder_name):
+  os.makedirs(folder_name)
+if not os.path.exists(folder_name + "packages.json"):
+  wget.download("https://raw.githubusercontent.com/MehdiRtal/WinApt/main/packages.json", folder_name, bar=None)
+data = json.load(open(folder_name + "packages.json", "r"))
 
-folder_name = "cache/"
 
 def download_link(arg):
   url = requests.get("https://filehippo.com/download_{}/post_download/".format(arg)).text
@@ -45,47 +47,39 @@ def install(arg):
   if args.quiet:
     print("\nInstalling {}...".format(arg))
   if data[arg]["installer"] == "custom":
-    os.system("cmd /c start cache/{} {}".format(file_name(arg), data[arg]["arguments"]))
+    os.system("cmd /c start {} {}".format(file_path(arg), data[arg]["arguments"]))
   if data[arg]["installer"] == "msi":
-    os.system("cmd /c msiexec /i cache/{} /qn /norestart".format(file_name(arg)))
+    os.system("cmd /c msiexec /i {} /qn /norestart".format(file_path(arg)))
   if data[arg]["installer"] == "innosetup":
-    os.system("cmd /c start cache/{} /VERYSILENT /NORESTART".format(file_name(arg)))
+    os.system("cmd /c start {} /VERYSILENT /NORESTART".format(file_path(arg)))
   if data[arg]["installer"] == "installshield":
-    os.system("cmd /c start cache/{} /s".format(file_name(arg)))
+    os.system("cmd /c start {} /s".format(file_path(arg)))
   if data[arg]["installer"] == "nsis":
-    os.system("cmd /c start cache/{} /S".format(file_name(arg)))
+    os.system("cmd /c start {} /S".format(file_path(arg)))
   if data[arg]["installer"] == "squirrel":
-    os.system("cmd /c start cache/{} -s".format(file_name(arg)))
-
-def file_name(arg):
-  return os.path.basename(urlparse(download_link(arg)).path)
+    os.system("cmd /c start {} -s".format(file_path(arg)))
 
 def file_path(arg):
-  return folder_name + file_name(arg)
+  file_name = os.path.basename(urlparse(download_link(arg)).path)
+  return folder_name + file_name
 
 def deploy():
-  for package in data if "".join(args.package) == "all" or args.list else data and args.package:
+  for package in data if args.all or args.list else data and args.package:
     try:
-      if not os.path.exists(folder_name):
-         os.makedirs(folder_name)
       if "version" not in data:
         data[package]["version"] = version(package)
-        json.dump(data, open("packages.json", "w"), indent = 2)
+        json.dump(data, open(folder_name + "packages.json", "w"), indent = 2)
       if args.list:
         print(package + " v" + version(package))
-      elif args.download:
-        if data[package]["version"] != version(package) and os.path.exists(file_path(package)):
-          os.remove(file_path(package))
-        if not os.path.exists(file_path(package)):
-          download(package)
-      elif data[package]["version"] == version(package) and os.path.exists(file_path(package)):
-        install(package)
       else:
-        if os.path.exists(file_path(package)):
-          os.remove(file_path(package))
-        download(package)
-        install(package)
-    except:
+        if data[package]["version"] == version(package) and os.path.exists(file_path(package)):
+          install(package)
+        else:
+          if os.path.exists(file_path(package)):
+            os.remove(file_path(package))
+          download(package)
+          install(package)
+    except AttributeError:
       if args.quiet:
         print("\n{} not found.".format(package))
       else:
