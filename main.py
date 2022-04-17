@@ -6,6 +6,7 @@ import os
 import argparse
 from bs4 import BeautifulSoup
 from urllib.parse import urlparse
+from jsonschema import validate
 
 parser = argparse.ArgumentParser()
 parser.add_argument("package", nargs="+")
@@ -16,6 +17,11 @@ folder_name = "cache/"
 
 with open("packages.json", "r") as f:
   data = json.load(f)
+
+with open("schema.json", "r") as f:
+  schema = json.load(f)
+
+validate(instance=data, schema=schema)
 
 def download_link(arg):
   url = requests.get("https://filehippo.com/download_{}/post_download/".format(arg)).text
@@ -61,7 +67,7 @@ def file_path(arg):
   return folder_name + file_name(arg)
 
 def deploy():
-  for package in data and args.package:
+  for package in data if "".join(args.package) == "all" else data and args.package:
     try:
       if args.download:
         os.remove(file_path(package))
