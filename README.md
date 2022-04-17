@@ -32,4 +32,4 @@ install them with WinApt itself:
 
 ## Credits
 
-The cube icon is derived from the one available from [Flaticons](https://flaticons.com/).
+The cube icon is derived from the one available from [Flaticon](https://flaticon.com/).
