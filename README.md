@@ -16,7 +16,7 @@ do one simple thing and do it well: download a `setup.exe` and install it, silen
 ## Instructions
 To install a package, for example Firefox, run:
 
-    just-install firefox
+    winapt firefox
 
 There are also other commands and flags that are described in the output of `winapt -help`.
 
@@ -28,7 +28,7 @@ To contribute a new package, see
 To work on just-install itself you will need Git and the Python compiler. You can
 install them with WinApt itself:
 
-    winget git python
+    winapt git python
 
 
 ## Credits
