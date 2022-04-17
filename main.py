@@ -26,6 +26,7 @@ def download_link(arg):
   if arg == "spotify":
     download_link = "https://download.spotify.com/SpotifyFullSetup.exe"
   return download_link
+
 def version(arg):
   url = requests.get("https://filehippo.com/download_{}/post_download/".format(arg)).text
   soup = BeautifulSoup(url, "lxml")
@@ -64,13 +65,15 @@ def file_path(arg):
 def deploy():
   for package in data if "".join(args.package) == "all" else data and args.package:
     try:
+      if not os.path.exists(folder_name):
+         os.makedirs(folder_name)
       if args.download:
         os.remove(file_path(package))
         download(package)
       else:
           if "version" not in data:
             data[package]["version"] = version(package)
-          json.dump(data, open("packages.json", "w"), indent = 2)
+            json.dump(data, open("packages.json", "w"), indent = 2)
           if data[package]["version"] == version(package) and os.path.exists(file_path(package)):
             install(package)
           else:
