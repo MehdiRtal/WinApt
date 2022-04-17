@@ -67,20 +67,21 @@ def deploy():
     try:
       if not os.path.exists(folder_name):
          os.makedirs(folder_name)
+      if "version" not in data:
+        data[package]["version"] = version(package)
+        json.dump(data, open("packages.json", "w"), indent = 2)
       if args.download:
-        os.remove(file_path(package))
-        download(package)
+        if data[package]["version"] != version(package) and os.path.exists(file_path(package)):
+          os.remove(file_path(package))
+        if not os.path.exists(file_path(package)):
+          download(package)
+      elif data[package]["version"] == version(package) and os.path.exists(file_path(package)):
+        install(package)
       else:
-          if "version" not in data:
-            data[package]["version"] = version(package)
-            json.dump(data, open("packages.json", "w"), indent = 2)
-          if data[package]["version"] == version(package) and os.path.exists(file_path(package)):
-            install(package)
-          else:
-            if os.path.exists(file_path(package)):
-              os.remove(file_path(package))
-            download(package)
-            install(package)
+        if os.path.exists(file_path(package)):
+          os.remove(file_path(package))
+        download(package)
+        install(package)
     except:
       if args.quiet:
         print("\n{} not found.".format(package))
