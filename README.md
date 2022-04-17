@@ -24,7 +24,7 @@ There are also other commands and flags that are described in the output of `win
 To contribute a new package, see
 [here](https://github.com/just-install/registry/blob/master/README.md).
 
-To work on just-install itself you will need Git and the Python compiler. You can
+To work on WinApt itself you will need Git and the Python compiler. You can
 install them with WinApt itself:
 
     winapt git python
