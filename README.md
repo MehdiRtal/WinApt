@@ -1,6 +1,6 @@
 # WinApt
 
-<img src="misc/cube.svg" align="right" width="200" height="200"/>
+<img src="https://github.com/just-install/just-install/raw/master/misc/cube.svg" align="right" width="200" height="200"/>
 
 _The simple package installer for Windows_
 
