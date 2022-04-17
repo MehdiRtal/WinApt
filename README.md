@@ -5,7 +5,7 @@
 _The simple package installer for Windows_
 
 [![License](https://img.shields.io/badge/license-GPL%203.0-blue.svg?style=flat)](LICENSE)
-[![Semver](https://img.shields.io/badge/version-v0.1-blue.svg?style=flat)]((#))
+[![Version](https://img.shields.io/badge/version-v0.1-blue.svg?style=flat)](#)
 
 ---
 
