@@ -1,58 +1,45 @@
 {
     "spotify": {
-        "version": "",
         "installer": "custom",
         "arguments": "/extract \"C:\\Program Files\\Spotify\""
     },
     "anydesk": {
-        "version": "",
         "installer": "custom",
         "arguments": "--install \"C:\\Program Files (x86)\\AnyDesk\" --silent --create-desktop-icon --create-shortcuts --start-with-win"
     },
     "7zip-64": {
-        "version": "",
         "installer": "nsis"
     },
     "whatsapp-64": {
-        "version": "",
         "installer": "squirrel"
     },
     "discord": {
-        "version": "",
         "installer": "squirrel"
     },
     "vlc-media-player-64": {
-        "version": "",
         "installer": "nsis"
     },
     "winscp": {
-        "version": "",
         "installer": "innosetup"
     },
     "sharex": {
-        "version": "",
         "installer": "innosetup"
     },
     "open-broadcaster-software": {
-        "version": "",
         "installer": "nsis"
     },
     "virtualbox": {
-        "version": "",
         "installer": "custom",
         "arguments": "--silent --ignore-reboot"
     },
     "libre-office": {
-        "version": "",
         "installer": "msi"
     },
     "microsoft-powertoys": {
-        "version": "",
         "installer": "custom",
         "arguments": "/install /quiet /norestart"
     },
     "qbittorrent-64": {
-        "version": "",
         "installer": "nsis"
     }
 }
