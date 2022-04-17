@@ -12,7 +12,12 @@ _The simple package installer for Windows_
 WinApt is a simple program which automates software installation on Windows. It tries to
 do one simple thing and do it well: download a `setup.exe` and install it, silently.
 
-## Instructions
+## Installation
+
+For up-to-date install instructions, please visit <https://mehdirtal.github.io/WinApt/>.
+
+## Quick start
+
 To install a package, for example Firefox, run:
 
     winapt firefox
