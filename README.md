@@ -22,7 +22,7 @@ There are also other commands and flags that are described in the output of `win
 ## Development
 
 To contribute a new package, see
-[Soon](#).
+[here](misc/registry.md).
 
 To work on WinApt itself you will need Git and the Python compiler. You can
 install them with WinApt itself:
