@@ -16,7 +16,6 @@
 				}
 			},
 			"required": [
-				"version",
 				"installer",
 				"arguments"
 			]
