@@ -1,6 +1,6 @@
 # WinApt
 
-<img src="https://cdn-icons-png.flaticon.com/512/645/645928.png" align="right" width="200" height="200"/>
+<img src="https://cdn-icons-png.flaticon.com/512/226/226904.png" align="right" width="200" height="200"/>
 
 _The simple package installer for Windows_
 
