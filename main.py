@@ -8,9 +8,16 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument("package", nargs="*", help="Download and install a package")
-parser.add_argument("-all", action="store_true", help="Download and install all packages")
-parser.add_argument("-l", "--list", action="store_true", help="List available packages")
+parser.add_argument("package",
+                    nargs="*",
+                    help="Download and install a package")
+parser.add_argument("-all",
+                    action="store_true",
+                    help="Download and install all packages")
+parser.add_argument("-l",
+                    "--list",
+                    action="store_true",
+                    help="List available packages")
 parser.add_argument("-q", "--quiet", action="store_false", help="Quiet mode")
 args = parser.parse_args()
 
