@@ -44,5 +44,9 @@
   },
   "visual-studio-code": {
     "installer": "innosetup"
+  },
+  "directx": {
+    "installer": "custom",
+    "arguments": "/Q"
   }
 }
