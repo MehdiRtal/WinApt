@@ -41,5 +41,8 @@
   },
   "qbittorrent-64": {
     "installer": "nsis"
+  },
+  "visual-studio-code": {
+    "installer": "innosetup"
   }
 }
