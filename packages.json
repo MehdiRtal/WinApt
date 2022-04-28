@@ -1,66 +1,51 @@
 {
   "spotify": {
-    "id": "spotify",
     "installer": "custom",
     "arguments": "/extract \"C:\\Program Files\\Spotify\""
   },
   "anydesk": {
-    "id": "anydesk",
     "installer": "custom",
     "arguments": "--install \"C:\\Program Files (x86)\\AnyDesk\" --silent --create-desktop-icon --create-shortcuts --start-with-win"
   },
-  "7zip": {
-    "id": "7zip-64",
+  "7zip-64": {
     "installer": "nsis"
   },
-  "whatsapp": {
-    "id": "whatsapp-64",
+  "whatsapp-64": {
     "installer": "squirrel"
   },
   "discord": {
-    "id": "discord",
     "installer": "squirrel"
   },
-  "vlc": {
-    "id": "vlc-media-player-64",
+  "vlc-media-player-64": {
     "installer": "nsis"
   },
   "winscp": {
-    "id": "winscp",
     "installer": "innosetup"
   },
   "sharex": {
-    "id": "sharex",
     "installer": "innosetup"
   },
-  "obs": {
-    "id": "open-broadcaster-software",
+  "open-broadcaster-software": {
     "installer": "nsis"
   },
   "virtualbox": {
-    "id": "virtualbox",
     "installer": "custom",
     "arguments": "--silent --ignore-reboot"
   },
-  "libreoffice": {
-    "id": "libre-office",
+  "libre-office": {
     "installer": "msi"
   },
-  "powertoys": {
-    "id": "microsoft-powertoys",
+  "microsoft-powertoys": {
     "installer": "custom",
     "arguments": "/install /quiet /norestart"
   },
-  "qbittorrent": {
-    "id": "qbittorrent-64",
+  "qbittorrent-64": {
     "installer": "nsis"
   },
-  "vscode": {
-    "id": "visual-studio-code",
+  "visual-studio-code": {
     "installer": "innosetup"
   },
   "directx": {
-    "id": "directx",
     "installer": "custom",
     "arguments": "/Q"
   }
