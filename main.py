@@ -16,8 +16,8 @@ args = parser.parse_args()
 
 folder_name = os.path.expandvars("%temp%/WinApt/")
 
-if not os.path.exists(os.path.expandvars(folder_name)):
-  os.makedirs(os.path.expandvars(folder_name))
+if not os.path.exists(folder_name):
+  os.makedirs(folder_name)
 if not os.path.exists(folder_name + "packages.json"):
   wget.download("https://raw.githubusercontent.com/MehdiRtal/WinApt/main/packages.json", folder_name, bar=None)
 data = json.load(open(folder_name + "packages.json", "r"))
@@ -38,14 +38,14 @@ def version(arg):
 
 def download(arg):
   if args.quiet:
-    print("\nDownloading {}...".format(arg))
+    print("\nDownloading {} v{}".format(arg, version(arg)))
     wget.download(download_link(arg), folder_name)
   else:
     wget.download(download_link(arg), folder_name, bar=None)
 
 def install(arg):
   if args.quiet:
-    print("\nInstalling {}...".format(arg))
+    print("\nInstalling {} v{}".format(arg, version(arg)))
   if data[arg]["installer"] == "custom":
     os.system("cmd /c start {} {}".format(file_path(arg), data[arg]["arguments"]))
   if data[arg]["installer"] == "msi":
@@ -66,7 +66,7 @@ def file_path(arg):
 def deploy():
   for package in data if args.all or args.list else data and args.package:
     try:
-      if "version" not in data:
+      if "version" not in data or data[package]["version"] != version(package):
         data[package]["version"] = version(package)
         json.dump(data, open(folder_name + "packages.json", "w"), indent = 2)
       if args.list:
