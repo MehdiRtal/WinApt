@@ -5,7 +5,6 @@ import re
 import os
 import argparse
 from bs4 import BeautifulSoup
-from urllib.parse import urlparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("package", nargs="*", help="Download and install a package")
@@ -15,24 +14,28 @@ parser.add_argument("-q", "--quiet", action="store_false", help="Quiet mode")
 args = parser.parse_args()
 
 folder_name = os.path.expandvars("%temp%/WinApt/")
+packages_url = "https://raw.githubusercontent.com/MehdiRtal/WinApt/main/packages.json"
 
 if not os.path.exists(folder_name):
   os.makedirs(folder_name)
 if not os.path.exists(folder_name + "packages.json"):
-  wget.download("https://raw.githubusercontent.com/MehdiRtal/WinApt/main/packages.json", folder_name, bar=None)
+  wget.download(packages_url, folder_name, bar=None)
 data = json.load(open(folder_name + "packages.json", "r"))
 
+def download_page(arg):
+  return "https://filehippo.com/download_{}/post_download/".format(arg)
+
 def download_link(arg):
-  url = requests.get("https://filehippo.com/download_{}/post_download/".format(arg)).text
-  soup = BeautifulSoup(url, "lxml")
+  get = requests.get(download_page(arg)).text
+  soup = BeautifulSoup(get, "lxml")
   download_link = soup.find("script", {"type": "text/javascript", "data-qa-download-url": True})["data-qa-download-url"]
   if arg == "spotify":
     download_link = "https://download.spotify.com/SpotifyFullSetup.exe"
   return download_link
 
 def version(arg):
-  url = requests.get("https://filehippo.com/download_{}/post_download/".format(arg)).text
-  soup = BeautifulSoup(url, "lxml")
+  get = requests.get(download_page(arg)).text
+  soup = BeautifulSoup(get, "lxml")
   version = "".join(re.findall("\d|[.]", soup.find("p", class_="program-header-inline__version").text))
   return version
 
@@ -60,7 +63,7 @@ def install(arg):
     os.system("cmd /c start {} -s".format(file_path(arg)))
 
 def file_path(arg):
-  file_name = os.path.basename(urlparse(download_link(arg)).path)
+  file_name = wget.filename_from_url(download_link(arg))
   return folder_name + file_name
 
 def deploy():
@@ -84,4 +87,4 @@ def deploy():
         print("\n{} not found.".format(package))
 
 if __name__ == "__main__":
-  deploy()
+	deploy()
