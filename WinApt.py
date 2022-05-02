@@ -16,14 +16,12 @@ args = parser.parse_args()
 folder_name = os.path.expandvars("%temp%/WinApt/")
 packages_url = "https://raw.githubusercontent.com/MehdiRtal/WinApt/main/packages.json"
 
-fr = open(folder_name + "packages.json", "r")
-fw = open(folder_name + "packages.json", "w")
-
 if not os.path.exists(folder_name):
   os.makedirs(folder_name)
 if not os.path.exists(folder_name + "packages.json"):
   wget.download(packages_url, folder_name, bar=None)
-data = json.load(fr)
+
+data = json.load(open(folder_name + "packages.json", "r"))
 
 def download_page(arg):
   return "https://filehippo.com/download_{}/post_download/".format(arg)
@@ -74,7 +72,7 @@ def deploy():
     try:
       if "version" not in data or data[package]["version"] != version(package):
         data[package]["version"] = version(package)
-        json.dump(data, fw, indent = 2)
+        json.dump(data, open(folder_name + "packages.json", "w"), indent = 2)
       if args.list:
         print(package + " v" + version(package))
       else:
