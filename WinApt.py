@@ -86,6 +86,8 @@ def deploy():
     except AttributeError:
       if args.quiet:
         print("\n{} not found.".format(package))
+      else:
+        pass
 
 if __name__ == "__main__":
 	deploy()
