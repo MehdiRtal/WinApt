@@ -1,7 +1,9 @@
 {
   "spotify": {
     "installer": "custom",
-    "arguments": "/extract \"C:\\Program Files\\Spotify\""
+    "arguments": "/extract \"C:\\Program Files\\Spotify\"",
+    "downloader": "custom",
+    "url": "https://download.spotify.com/SpotifyFullSetup.exe"
   },
   "anydesk": {
     "installer": "custom",
