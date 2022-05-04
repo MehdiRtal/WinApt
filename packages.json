@@ -23,6 +23,7 @@
     "installer": "squirrel"
   },
   "vlc-media-player-64": {
+    "downloader": "filehippo",
     "installer": "nsis"
   },
   "winscp": {
