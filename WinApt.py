@@ -5,7 +5,6 @@ import re
 import os
 import argparse
 from bs4 import BeautifulSoup
-from windows_tools.installed_software import get_installed_software
 
 parser = argparse.ArgumentParser()
 parser.add_argument("package", nargs="*", help="Download and install a package")
@@ -24,26 +23,21 @@ if not os.path.exists(folder_name + "packages.json"):
 
 data = json.load(open(folder_name + "packages.json", "r"))
 
-def download_page(arg):
-  if data[arg]["downloader"] == "filehippo":
-    return "https://filehippo.com/download_{}/post_download/".format(arg)
+def scrape(arg):
+  get = requests.get(arg).text
+  soup = BeautifulSoup(get, "lxml")
+  return soup
 
 def download_link(arg):
-  if data[arg]["downloader"] != "custom":
-    get = requests.get(download_page(arg)).text
-    soup = BeautifulSoup(get, "lxml")
-    if data[arg]["downloader"] == "filehippo": 
-      download_link = soup.find("script", {"type": "text/javascript", "data-qa-download-url": True})["data-qa-download-url"]
+  if data[arg]["downloader"] == "filehippo": 
+    download_link = scrape("https://filehippo.com/download_{}/post_download/".format(arg)).find("script", {"type": "text/javascript", "data-qa-download-url": True})["data-qa-download-url"]
   else:
     download_link = data[arg]["url"]
   return download_link
 
 def version(arg):
-  if data[arg]["downloader"] != "custom":
-    get = requests.get(download_page(arg)).text
-    soup = BeautifulSoup(get, "lxml")
-    if data[arg]["downloader"] == "filehippo":
-      version = "".join(re.findall("\d|[.]", soup.find("p", class_="program-header-inline__version").text))
+  if data[arg]["downloader"] == "filehippo":
+    version = scrape("https://filehippo.com/download_{}/".format(arg)).find("p", class_="program-header__version").text
   else:
     version = "Latest"
   return version
@@ -96,8 +90,7 @@ def deploy():
     except AttributeError:
       if args.quiet:
         print("\n{} not found.".format(package))
-      else:
-        pass
+      else: pass
 
 if __name__ == "__main__":
 	deploy()
