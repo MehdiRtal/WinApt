@@ -1,7 +1,6 @@
 import requests
 import wget
 import json
-import re
 import os
 import argparse
 from bs4 import BeautifulSoup
@@ -23,21 +22,22 @@ if not os.path.exists(folder_name + "packages.json"):
 
 data = json.load(open(folder_name + "packages.json", "r"))
 
-def scrape(arg):
-  get = requests.get(arg).text
-  soup = BeautifulSoup(get, "lxml")
+def soup(arg):
+  if data[arg]["downloader"] == "filehippo":
+    response = requests.get("https://filehippo.com/download_{}/".format(arg))
+  soup = BeautifulSoup(response.text, "lxml")
   return soup
 
 def download_link(arg):
   if data[arg]["downloader"] == "filehippo": 
-    download_link = scrape("https://filehippo.com/download_{}/post_download/".format(arg)).find("script", {"type": "text/javascript", "data-qa-download-url": True})["data-qa-download-url"]
+    download_link = soup(arg+"post_download/").find("script", {"type": "text/javascript", "data-qa-download-url": True})["data-qa-download-url"]
   else:
     download_link = data[arg]["url"]
   return download_link
 
 def version(arg):
   if data[arg]["downloader"] == "filehippo":
-    version = scrape("https://filehippo.com/download_{}/".format(arg)).find("p", class_="program-header__version").text
+    version = soup(arg).find("p", class_="program-header__version").text
   else:
     version = "Latest"
   return version
