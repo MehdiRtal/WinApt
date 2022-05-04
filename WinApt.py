@@ -5,6 +5,7 @@ import re
 import os
 import argparse
 from bs4 import BeautifulSoup
+from windows_tools.installed_software import get_installed_software
 
 parser = argparse.ArgumentParser()
 parser.add_argument("package", nargs="*", help="Download and install a package")
@@ -24,20 +25,27 @@ if not os.path.exists(folder_name + "packages.json"):
 data = json.load(open(folder_name + "packages.json", "r"))
 
 def download_page(arg):
-  return "https://filehippo.com/download_{}/post_download/".format(arg)
+  if data[arg]["downloader"] == "filehippo":
+    return "https://filehippo.com/download_{}/post_download/".format(arg)
 
 def download_link(arg):
-  get = requests.get(download_page(arg)).text
-  soup = BeautifulSoup(get, "lxml")
-  download_link = soup.find("script", {"type": "text/javascript", "data-qa-download-url": True})["data-qa-download-url"]
-  if arg == "spotify":
-    download_link = "https://download.spotify.com/SpotifyFullSetup.exe"
+  if data[arg]["downloader"] != "custom":
+    get = requests.get(download_page(arg)).text
+    soup = BeautifulSoup(get, "lxml")
+    if data[arg]["downloader"] == "filehippo": 
+      download_link = soup.find("script", {"type": "text/javascript", "data-qa-download-url": True})["data-qa-download-url"]
+  else:
+    download_link = data[arg]["url"]
   return download_link
 
 def version(arg):
-  get = requests.get(download_page(arg)).text
-  soup = BeautifulSoup(get, "lxml")
-  version = "".join(re.findall("\d|[.]", soup.find("p", class_="program-header-inline__version").text))
+  if data[arg]["downloader"] != "custom":
+    get = requests.get(download_page(arg)).text
+    soup = BeautifulSoup(get, "lxml")
+    if data[arg]["downloader"] == "filehippo":
+      version = "".join(re.findall("\d|[.]", soup.find("p", class_="program-header-inline__version").text))
+  else:
+    version = "Latest"
   return version
 
 def download(arg):
@@ -71,13 +79,15 @@ def deploy():
   for package in data if args.all or args.list else data and args.package:
     try:
       if "version" not in data or data[package]["version"] != version(package):
-        data[package]["version"] = version(package)
-        json.dump(data, open(folder_name + "packages.json", "w"), indent = 2)
+        if data[package]["downloader"] != "custom":
+          data[package]["version"] = version(package)
+          json.dump(data, open(folder_name + "packages.json", "w"), indent = 2)
       if args.list:
         print(package + " v" + version(package))
       else:
-        if data[package]["version"] == version(package) and os.path.exists(file_path(package)):
-          install(package)
+        if os.path.exists(file_path(package)):
+          if data[package]["version"] == version(package) or data[package]["version"] not in data:
+            install(package)
         else:
           if os.path.exists(file_path(package)):
             os.remove(file_path(package))
