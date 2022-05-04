@@ -1,60 +1,75 @@
 {
   "spotify": {
-    "installer": "custom",
-    "arguments": "/extract \"C:\\Program Files\\Spotify\"",
     "downloader": "custom",
-    "url": "https://download.spotify.com/SpotifyFullSetup.exe"
+    "url": "https://download.spotify.com/SpotifyFullSetup.exe",
+    "installer": "custom",
+    "arguments": "/extract \"C:\\Program Files\\Spotify\""
   },
   "anydesk": {
+    "downloader": "filehippo",
     "installer": "custom",
     "arguments": "--install \"C:\\Program Files (x86)\\AnyDesk\" --silent --create-desktop-icon --create-shortcuts --start-with-win"
   },
   "7zip-64": {
+    "downloader": "filehippo",
     "installer": "nsis"
   },
   "whatsapp-64": {
+    "downloader": "filehippo",
     "installer": "squirrel"
   },
   "discord": {
+    "downloader": "filehippo",
     "installer": "squirrel"
   },
   "vlc-media-player-64": {
     "installer": "nsis"
   },
   "winscp": {
+    "downloader": "filehippo",
     "installer": "innosetup"
   },
   "sharex": {
+    "downloader": "filehippo",
     "installer": "innosetup"
   },
   "open-broadcaster-software": {
+    "downloader": "filehippo",
     "installer": "nsis"
   },
   "virtualbox": {
+    "downloader": "filehippo",
     "installer": "custom",
     "arguments": "--silent --ignore-reboot"
   },
   "libre-office": {
+    "downloader": "filehippo",
     "installer": "msi"
   },
   "microsoft-powertoys": {
+    "downloader": "filehippo",
     "installer": "custom",
     "arguments": "/install /quiet /norestart"
   },
   "qbittorrent-64": {
+    "downloader": "filehippo",
     "installer": "nsis"
   },
   "visual-studio-code": {
+    "downloader": "filehippo",
     "installer": "innosetup"
   },
   "directx": {
+    "downloader": "filehippo",
     "installer": "custom",
     "arguments": "/Q"
   },
   "steam": {
+    "downloader": "filehippo",
     "installer": "nsis"
   },
   "epic-games-launcher": {
+    "downloader": "filehippo",
     "installer": "msi"
   }
 }
