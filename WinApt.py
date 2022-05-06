@@ -13,12 +13,11 @@ parser.add_argument("-q", "--quiet", action="store_false", help="Quiet mode")
 args = parser.parse_args()
 
 folder_name = os.path.expandvars("%temp%/WinApt/")
-packages_url = "https://raw.githubusercontent.com/MehdiRtal/WinApt/main/packages.json"
 
 if not os.path.exists(folder_name):
   os.makedirs(folder_name)
 if not os.path.exists(folder_name + "packages.json"):
-  wget.download(packages_url, folder_name, bar=None)
+  wget.download("https://raw.githubusercontent.com/MehdiRtal/WinApt/main/packages.json", folder_name, bar=None)
 
 data = json.load(open(folder_name + "packages.json", "r"))
 
