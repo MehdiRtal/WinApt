@@ -1,75 +1,92 @@
 {
   "spotify": {
+    "id": "spotify",
     "downloader": "custom",
     "url": "https://download.spotify.com/SpotifyFullSetup.exe",
     "installer": "custom",
     "arguments": "/extract \"C:\\Program Files\\Spotify\""
   },
   "anydesk": {
+    "id": "anydesk",
     "downloader": "filehippo",
     "installer": "custom",
     "arguments": "--install \"C:\\Program Files (x86)\\AnyDesk\" --silent --create-desktop-icon --create-shortcuts --start-with-win"
   },
-  "7zip-64": {
+  "7zip": {
+    "id": "7zip-64",
     "downloader": "filehippo",
     "installer": "nsis"
   },
-  "whatsapp-64": {
+  "whatsapp": {
+    "id": "whatsapp-64",
     "downloader": "filehippo",
     "installer": "squirrel"
   },
   "discord": {
+    "id": "discord",
     "downloader": "filehippo",
     "installer": "squirrel"
   },
-  "vlc-media-player-64": {
+  "vlc": {
+    "id": "vlc-media-player-64",
     "downloader": "filehippo",
     "installer": "nsis"
   },
   "winscp": {
+    "id": "winscp",
     "downloader": "filehippo",
     "installer": "innosetup"
   },
   "sharex": {
+    "id": "sharex",
     "downloader": "filehippo",
     "installer": "innosetup"
   },
-  "open-broadcaster-software": {
+  "obs": {
+    "id": "open-broadcaster-software",
     "downloader": "filehippo",
     "installer": "nsis"
   },
   "virtualbox": {
+    "id": "virtualbox",
     "downloader": "filehippo",
     "installer": "custom",
     "arguments": "--silent --ignore-reboot"
   },
-  "libre-office": {
+  "libreoffice": {
+    "id": "libre-office",
     "downloader": "filehippo",
     "installer": "msi"
   },
-  "microsoft-powertoys": {
+  "powertoys": {
+    "id": "microsoft-powertoys",
     "downloader": "filehippo",
     "installer": "custom",
     "arguments": "/install /quiet /norestart"
   },
-  "qbittorrent-64": {
+  "qbittorrent": {
+    "id": "qbittorrent-64",
     "downloader": "filehippo",
     "installer": "nsis"
   },
-  "visual-studio-code": {
+  "vscode": {
+    "id": "visual-studio-code",
     "downloader": "filehippo",
     "installer": "innosetup"
   },
   "directx": {
+    "id": "directx",
     "downloader": "filehippo",
     "installer": "custom",
     "arguments": "/Q"
   },
   "steam": {
+    "id": "steam",
     "downloader": "filehippo",
     "installer": "nsis"
   },
-  "epic-games-launcher": {
+  "epicgames": {
+    "id": "epic-games-launcher",
     "downloader": "filehippo",
     "installer": "msi"
   }
