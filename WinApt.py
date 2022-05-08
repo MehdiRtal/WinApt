@@ -29,7 +29,7 @@ def soup(arg, arg2):
 
 def download_link(arg):
   if data[arg]["downloader"] == "filehippo":
-    download_link = soup(data[arg],"post_download/").find("script", {"type": "text/javascript", "data-qa-download-url": True})["data-qa-download-url"]
+    download_link = soup(data[arg], "post_download/").find("script", {"type": "text/javascript", "data-qa-download-url": True})["data-qa-download-url"]
   else:
     download_link = data[arg]["url"]
   return download_link
