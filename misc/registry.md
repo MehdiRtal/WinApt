@@ -45,3 +45,6 @@ This JSON object must contain at least the following two keys:
   - `msi`: Silently installs Windows Installer packages;
   - `nsis`: Silently installs NSIS packages;
   - `squirrel`: Silently installs Squirrel packages;
+- `options`: It can be one of the following:
+  - `id`;
+  - `url`;
