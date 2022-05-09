@@ -11,7 +11,15 @@ parser.add_argument("-all", action="store_true", help="Download and install all 
 parser.add_argument("-l", "--list", action="store_true", help="List available packages")
 parser.add_argument("-q", "--quiet", action="store_false", help="Quiet mode")
 args = parser.parse_args()
+
 folder_name = os.path.expandvars("%temp%/WinApt/")
+
+if not os.path.exists(folder_name):
+  os.makedirs(folder_name)
+if not os.path.exists(folder_name + "packages.json"):
+  wget.download("https://raw.githubusercontent.com/MehdiRtal/WinApt/main/packages.json", folder_name, bar=None)
+
+data = json.load(open(folder_name + "packages.json", "r"))
 
 def soup(arg, arg2):
   if arg["downloader"] == "filehippo":
@@ -45,6 +53,8 @@ def install(arg):
     print("\nInstalling {} v{}".format(arg, version(arg)))
   if data[arg]["installer"] == "custom":
     os.system("cmd /c start {} {}".format(file_path(arg), data[arg]["arguments"]))
+  if data[arg]["installer"] == "as-is":
+    os.system("cmd /c start {}".format(file_path(arg)))
   if data[arg]["installer"] == "msi":
     os.system("cmd /c msiexec /i {} /qn /norestart".format(file_path(arg)))
   if data[arg]["installer"] == "innosetup":
@@ -84,9 +94,4 @@ def deploy():
       else: pass
 
 if __name__ == "__main__":
-	if not os.path.exists(folder_name):
-  		os.makedirs(folder_name)
-	if not os.path.exists(folder_name + "packages.json"):
-  		wget.download("https://raw.githubusercontent.com/MehdiRtal/WinApt/main/packages.json", folder_name, bar=None)
-	data = json.load(open(folder_name + "packages.json", "r"))
 	deploy()
