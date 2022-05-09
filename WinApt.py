@@ -11,9 +11,7 @@ parser.add_argument("-all", action="store_true", help="Download and install all 
 parser.add_argument("-l", "--list", action="store_true", help="List available packages")
 parser.add_argument("-q", "--quiet", action="store_false", help="Quiet mode")
 args = parser.parse_args()
-
 folder_name = os.path.expandvars("%temp%/WinApt/")
-data = json.load(open(folder_name + "packages.json", "r"))
 
 def soup(arg, arg2):
   if arg["downloader"] == "filehippo":
@@ -90,4 +88,5 @@ if __name__ == "__main__":
   		os.makedirs(folder_name)
 	if not os.path.exists(folder_name + "packages.json"):
   		wget.download("https://raw.githubusercontent.com/MehdiRtal/WinApt/main/packages.json", folder_name, bar=None)
+	data = json.load(open(folder_name + "packages.json", "r"))
 	deploy()
