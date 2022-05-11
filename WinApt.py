@@ -19,7 +19,8 @@ if not os.path.exists(folder_name):
 if not os.path.exists(folder_name + "packages.json"):
   wget.download("https://raw.githubusercontent.com/MehdiRtal/WinApt/main/packages.json", folder_name, bar=None)
 
-data = json.load(open(folder_name + "packages.json", "r"))
+with open(folder_name + "packages.json", "r") as f:
+	data = json.load(f)
 
 def soup(arg, arg2):
   if arg["downloader"] == "filehippo":
@@ -53,6 +54,10 @@ def install(arg):
     print("\nInstalling {} v{}".format(arg, version(arg)))
   if data[arg]["installer"] == "custom":
     os.system("cmd /c start {} {}".format(file_path(arg), data[arg]["arguments"]))
+	if data[arg]["installer"] == "zip":
+		with zipfile.ZipFile(filepath(arg), 'r') as zip:
+    	zip.extractall(folder_name)
+    os.system("cmd /c start {}/{}".format(folder_name, data[arg]["filename"]))
   if data[arg]["installer"] == "as-is":
     os.system("cmd /c start {}".format(file_path(arg)))
   if data[arg]["installer"] == "msi":
@@ -76,7 +81,8 @@ def deploy():
       if "version" not in data or data[package]["version"] != version(package):
         if data[package]["downloader"] != "custom":
           data[package]["version"] = version(package)
-          json.dump(data, open(folder_name + "packages.json", "w"), indent = 2)
+					with open(folder_name + "packages.json", "w") as f:
+          	json.dump(data, f, indent = 2)
       if args.list:
         print(package + " v" + version(package))
       else:
