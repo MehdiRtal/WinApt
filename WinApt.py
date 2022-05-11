@@ -3,6 +3,7 @@ import wget
 import json
 import os
 import argparse
+import zipfile
 from bs4 import BeautifulSoup
 
 parser = argparse.ArgumentParser()
@@ -57,7 +58,7 @@ def install(arg):
 	if data[arg]["installer"] == "zip":
 		with zipfile.ZipFile(filepath(arg), 'r') as zip:
     	zip.extractall(folder_name)
-    os.system("cmd /c start {}/{}".format(folder_name, data[arg]["filename"]))
+    os.system("cmd /c start {} {}".format(folder_name, data[arg]["filename"]))
   if data[arg]["installer"] == "as-is":
     os.system("cmd /c start {}".format(file_path(arg)))
   if data[arg]["installer"] == "msi":
