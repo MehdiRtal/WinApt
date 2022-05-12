@@ -37,14 +37,12 @@ The following key is optional:
 This JSON object must contain at least the following two keys:
 
 - `installer`: It can be one of the following:
-  - `advancedinstaller`: Silently installs Advanced Installer packages;
   - `as-is`: Will run the executable as-is;
-  - `copy`: Copy the file according to the `destination` parameter;
   - `custom`: Allows you to specify how to call the installer according to the `arguments` parameter;
+  - `advancedinstaller`: Silently installs Advanced Installer packages;
   - `innosetup`: Silently installs InnoSetup packages;
   - `msi`: Silently installs Windows Installer packages;
   - `nsis`: Silently installs NSIS packages;
   - `squirrel`: Silently installs Squirrel packages;
-- `options`: It can be one of the following:
-  - `id`;
-  - `url`;
+  - `zip`: Runs an installer within a .zip file
+- `filename`: The complete name of the file that should be downloaded in the temporary directory. When specified, this value takes precedence over `extension`.
