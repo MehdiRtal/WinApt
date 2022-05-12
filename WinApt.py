@@ -56,8 +56,10 @@ def install(arg):
   if data[arg]["installer"] == "custom":
     os.system("cmd /c start {} {}".format(file_path(arg), data[arg]["arguments"]))
   if data[arg]["installer"] == "zip":
-    with zipfile.ZipFile(file_path(arg), 'r') as zip:
-      zip.extractall(folder_name)
+    if not os.path.exists(folder_name + arg):
+      os.makedirs(folder_name + arg)
+    with zipfile.ZipFile(file_path(arg), "r") as zip:
+      zip.extractall(folder_name + arg)
     os.system("cmd /c start {} {}".format(folder_name, data[arg]["filename"]))
   if data[arg]["installer"] == "as-is":
     os.system("cmd /c start {}".format(file_path(arg)))
