@@ -41,3 +41,11 @@ This JSON object must contain at least the following two keys:
   - `squirrel`: Silently installs Squirrel packages;
   - `zip`: Runs an installer within a .zip file
 - `filename`: The complete name of the file that should be downloaded in the temporary directory. When specified, this value takes precedence over `extension`.
+
+## Placeholders
+
+In some places, you can use the following placeholders:
+
+- `{{.version}}`: This placeholder gets expanded with the package's version.
+- `{{.installer}}`: This placeholder gets replaced with the absolute path to the downloaded installer executable.
+- `{{.ENV_VAR}}`: Where `ENV_VAR` is any environment variable found on the system. All environment variables are normalized to upper case so, for example, `%SystemDrive%` becomes available as `{{.SYSTEMDRIVE}}`. One exception is `%ProgramFiles(x86)%` that gets normalized as `{{.PROGRAMFILES_X86}}` (notice the lack of parentheses).
