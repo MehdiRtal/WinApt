@@ -23,25 +23,22 @@ if not os.path.exists(folder_name + "packages.json"):
 with open(folder_name + "packages.json", "r") as f:
   data = json.load(f)
 
-def soup(arg, arg2):
+def soup(arg, arg2 = ""):
   if arg["downloader"] == "filehippo":
     response = requests.get("https://filehippo.com/download_{}/{}".format(arg["id"], arg2))
-  soup = BeautifulSoup(response.text, "lxml")
-  return soup
+  return BeautifulSoup(response.text, "lxml")
 
 def download_link(arg):
   if data[arg]["downloader"] == "filehippo":
-    download_link = soup(data[arg], "post_download/").find("script", {"type": "text/javascript", "data-qa-download-url": True})["data-qa-download-url"]
+    return soup(data[arg], "post_download/").find("script", {"type": "text/javascript", "data-qa-download-url": True})["data-qa-download-url"]
   else:
-    download_link = data[arg]["url"]
-  return download_link
+    return data[arg]["url"]
 
 def version(arg):
   if data[arg]["downloader"] == "filehippo":
-    version = soup(data[arg], "").find("p", class_="program-header__version").text
+    return soup(data[arg]).find("p", class_="program-header__version").text
   else:
-    version = "Latest"
-  return version
+    return "Latest"
 
 def download(arg):
   if args.quiet:
@@ -75,8 +72,7 @@ def install(arg):
     os.system("cmd /c start {} -s".format(file_path(arg)))
 
 def file_path(arg):
-  file_name = wget.filename_from_url(download_link(arg))
-  return folder_name + file_name
+  return folder_name + wget.filename_from_url(download_link(arg))
 
 def deploy():
   for package in data if args.all or args.list else data and args.package:
