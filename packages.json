@@ -92,6 +92,7 @@
   "msiafterburner": {
     "downloader": "filehippo",
     "id": "msi-afterburner",
-    "installer": "msi"
+    "installer": "zip",
+    "filename": "MSIAfterburnerSetup464Beta3.exe",
   }
 }
