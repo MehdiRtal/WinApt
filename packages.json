@@ -89,7 +89,7 @@
     "id": "epic-games-launcher",
     "installer": "msi"
   },
-  "afterburner": {
+  "msiafterburner": {
     "downloader": "filehippo",
     "id": "msi-afterburner",
     "installer": "msi"
