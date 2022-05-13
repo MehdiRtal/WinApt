@@ -84,15 +84,21 @@
     "id": "steam",
     "installer": "nsis"
   },
-  "epicgames": {
+  "epic-games": {
     "downloader": "filehippo",
     "id": "epic-games-launcher",
     "installer": "msi"
   },
-  "msiafterburner": {
+  "msi-afterburner": {
     "downloader": "filehippo",
     "id": "msi-afterburner",
     "installer": "zip",
     "filename": "MSIAfterburnerSetup464Beta3.exe",
+  },
+  "equalizer-apo": {
+    "downloader": "filehippo",
+    "id": "equalizer_apo",
+    "installer": "zip",
+    "filename": "EqualizerAPO64-1.2.1.exe",
   }
 }
