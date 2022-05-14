@@ -74,26 +74,25 @@ def file_path(arg):
   return folder_name + wget.filename_from_url(download_link(arg))
 
 def schedule():
-  if args.schedule:
-    if args.quiet:
-      print("\nSetting packages as a task..")
-    if args.schedule.endswith("h"):
-      sc = "HOURLY"
-      mo = args.schedule.split("h")[0]
-    if args.schedule.endswith("mn"):
-      sc = "MINUTE"
-      mo = args.schedule.split("mn")[0]
-    if args.schedule.endswith("d"):
-      sc = "DAILY"
-      mo = args.schedule.split("d")[0]
-    if args.schedule.endswith("w"):
-      sc = "WEEKLY"
-      mo = args.schedule.split("w")[0]
-    if args.schedule == "start":
-      sc = "ONSTART"
-    if args.schedule == "idle":
-      sc = "ONIDLE"
-    os.system("cmd /c schtasks /create /sc {} /mo {} /tn WinApt /tr start {}WinApt.exe {}".format(sc, mo, folder_name, " ".join(args.package)))
+  if args.quiet:
+    print("\nSchedulling packages as a task..")
+  if args.schedule.endswith("h"):
+    sc = "HOURLY"
+    mo = args.schedule.split("h")[0]
+  if args.schedule.endswith("mn"):
+    sc = "MINUTE"
+    mo = args.schedule.split("mn")[0]
+  if args.schedule.endswith("d"):
+    sc = "DAILY"
+    mo = args.schedule.split("d")[0]
+  if args.schedule.endswith("w"):
+    sc = "WEEKLY"
+    mo = args.schedule.split("w")[0]
+  if args.schedule == "start":
+    sc = "ONSTART"
+  if args.schedule == "idle":
+    sc = "ONIDLE"
+  os.system("cmd /c schtasks /create /sc {} /mo {} /tn WinApt /tr start {}WinApt.exe {}".format(sc, mo, folder_name, " ".join(args.package)))
 
 def deploy():
   for package in data if args.all or args.list else data and args.package:
@@ -120,5 +119,8 @@ def deploy():
       else: pass
 
 if __name__ == "__main__":
-  deploy()
-  schedule()
+  if args.schedule:
+    schedule()
+  else:
+    deploy()
+  
