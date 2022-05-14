@@ -7,10 +7,11 @@ import zipfile
 from bs4 import BeautifulSoup
 
 parser = argparse.ArgumentParser()
-parser.add_argument("package", nargs="*", help="Download and install a package")
-parser.add_argument("-all", action="store_true", help="Download and install all packages")
-parser.add_argument("-l", "--list", action="store_true", help="List available packages")
-parser.add_argument("-q", "--quiet", action="store_false", help="Quiet mode")
+parser.add_argument("package", nargs="*", help="Download and install a package.")
+parser.add_argument("-all", action="store_true", help="Download and install all packages.")
+parser.add_argument("-l", "--list", action="store_true", help="List available packages.")
+parser.add_argument("-q", "--quiet", action="store_false", help="Quiet mode.")
+parser.add_argument("-s", "--schedule", nargs="?", metavar="", help="Schedule packages as a task.")
 args = parser.parse_args()
 folder_name = os.path.expandvars("%temp%/WinApt/")
 
@@ -47,7 +48,7 @@ def download(arg):
 
 def install(arg):
   if args.quiet:
-    print("\nInstalling {} v{}".format(arg, version(arg)))
+    print("\nInstalling {} v{}..".format(arg, version(arg)))
   if data[arg]["installer"] == "custom":
     os.system("cmd /c start {} {}".format(file_path(arg), data[arg]["arguments"]))
   if data[arg]["installer"] == "zip":
@@ -72,6 +73,28 @@ def install(arg):
 def file_path(arg):
   return folder_name + wget.filename_from_url(download_link(arg))
 
+def schedule():
+  if args.schedule:
+    if args.quiet:
+      print("\nSetting packages as a task..")
+    if args.schedule.endswith("h"):
+      sc = "HOURLY"
+      mo = args.schedule.split("h")[0]
+    if args.schedule.endswith("mn"):
+      sc = "MINUTE"
+      mo = args.schedule.split("mn")[0]
+    if args.schedule.endswith("d"):
+      sc = "DAILY"
+      mo = args.schedule.split("d")[0]
+    if args.schedule.endswith("w"):
+      sc = "WEEKLY"
+      mo = args.schedule.split("w")[0]
+    if args.schedule == "start":
+      sc = "ONSTART"
+    if args.schedule == "idle":
+      sc = "ONIDLE"
+    os.system("cmd /c schtasks /create /sc {} /mo {} /tn WinApt /tr start {}WinApt.exe {}".format(sc, mo, folder_name, " ".join(args.package)))
+
 def deploy():
   for package in data if args.all or args.list else data and args.package:
     try:
@@ -84,7 +107,7 @@ def deploy():
         print(package + " v" + version(package))
       else:
         if os.path.exists(file_path(package)):
-          if data[package]["version"] == version(package) or data[package]["version"] not in data:
+          if "version" not in data[package] or data[package]["version"] == version(package):
             install(package)
         else:
           if os.path.exists(file_path(package)):
@@ -98,3 +121,4 @@ def deploy():
 
 if __name__ == "__main__":
   deploy()
+  schedule()
