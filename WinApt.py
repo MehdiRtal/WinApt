@@ -35,7 +35,7 @@ def download_link(arg):
 
 def version(arg):
   if data[arg]["downloader"] == "filehippo":
-    return soup(data[arg]).find("p", class_="program-header__version").text
+    return   
   else:
     return "Latest"
 
@@ -74,25 +74,31 @@ def file_path(arg):
   return folder_name + wget.filename_from_url(download_link(arg))
 
 def schedule():
-  if args.quiet:
-    print("\nSchedulling packages as a task..")
-  if args.schedule.endswith("h"):
-    sc = "HOURLY"
-    mo = args.schedule.split("h")[0]
-  if args.schedule.endswith("mn"):
-    sc = "MINUTE"
-    mo = args.schedule.split("mn")[0]
-  if args.schedule.endswith("d"):
-    sc = "DAILY"
-    mo = args.schedule.split("d")[0]
-  if args.schedule.endswith("w"):
-    sc = "WEEKLY"
-    mo = args.schedule.split("w")[0]
   if args.schedule == "start":
-    sc = "ONSTART"
-  if args.schedule == "idle":
-    sc = "ONIDLE"
-  os.system("cmd /c schtasks /create /sc {} /mo {} /tn WinApt /tr start {}WinApt.exe {}".format(sc, mo, folder_name, " ".join(args.package)))
+    print("Starting the task schedulling..")
+    os.system("cmd /c schtasks /run /tn WinApt")
+  elif args.schedule == "stop":
+    print("Stopping the task schedulling..")
+    os.system("cmd /c schtasks /end /tn WinApt")
+  else:
+    print("\nSchedulling packages as a task..")
+    if args.schedule.endswith("h"):
+      sc = "HOURLY"
+      mo = args.schedule.split("h")[0]
+    if args.schedule.endswith("mn"):
+      sc = "MINUTE"
+      mo = args.schedule.split("mn")[0]
+    if args.schedule.endswith("d"):
+      sc = "DAILY"
+      mo = args.schedule.split("d")[0]
+    if args.schedule.endswith("w"):
+      sc = "WEEKLY"
+      mo = args.schedule.split("w")[0]
+    if args.schedule == "onstart":
+      sc = "ONSTART"
+    if args.schedule == "onidle":
+      sc = "ONIDLE"
+    os.system("cmd /c schtasks /create /sc {} /mo {} /tn WinApt /tr start {}WinApt.exe {}".format(sc, mo, folder_name, " ".join(args.package)))
 
 def deploy():
   for package in data if args.all or args.list else data and args.package:
@@ -123,4 +129,3 @@ if __name__ == "__main__":
     schedule()
   else:
     deploy()
-  
