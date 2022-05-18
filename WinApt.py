@@ -35,7 +35,7 @@ def download_link(arg):
 
 def version(arg):
   if data[arg]["downloader"] == "filehippo":
-    return   
+    return soup(data[arg]).find("p", class_="program-header__version").text
   else:
     return "Latest"
 
