@@ -24,7 +24,7 @@ with open(folder_name + "packages.json", "r") as f:
 
 def soup(arg, arg2 = ""):
   if arg["downloader"] == "filehippo":
-    response = requests.get("https://filehippo.com/download_{}/{}".format(arg["id"], arg2))
+    response = requests.get(f"https://filehippo.com/download_{arg["id"]}/{arg2}"
   return BeautifulSoup(response.text, "lxml")
 
 def download_link(arg):
@@ -41,34 +41,34 @@ def version(arg):
 
 def download(arg):
   if args.quiet:
-    print("\nDownloading {} v{}".format(arg, version(arg)))
+    print(f"\nDownloading {arg} v{version(arg)}"
     wget.download(download_link(arg), folder_name)
   else:
     wget.download(download_link(arg), folder_name, bar=None)
 
 def install(arg):
   if args.quiet:
-    print("\nInstalling {} v{}..".format(arg, version(arg)))
+    print(f"\nInstalling {arg} v{version(arg)}.."
   if data[arg]["installer"] == "custom":
-    os.system("cmd /c start {} {}".format(file_path(arg), data[arg]["arguments"]))
+    os.system(f"cmd /c start {file_path(arg)} {data[arg]["arguments"]}"
   if data[arg]["installer"] == "zip":
     if not os.path.exists(folder_name + arg):
       os.makedirs(folder_name + arg)
     with zipfile.ZipFile(file_path(arg), "r") as zip:
       zip.extractall(folder_name + arg)
-    os.system("cmd /c start {} {}".format(folder_name, data[arg]["filename"]))
+    os.system(f"cmd /c start {folder_name} {data[arg]["filename"]}"
   if data[arg]["installer"] == "as-is":
-    os.system("cmd /c start {}".format(file_path(arg)))
+    os.system(f"cmd /c start {file_path(arg)}"
   if data[arg]["installer"] == "msi":
-    os.system("cmd /c msiexec /i {} /qn /norestart".format(file_path(arg)))
+    os.system(f"cmd /c msiexec /i {file_path(arg)} /qn /norestart"
   if data[arg]["installer"] == "innosetup":
-    os.system("cmd /c start {} /VERYSILENT /NORESTART".format(file_path(arg)))
+    os.system(f"cmd /c start {file_path(arg)} /VERYSILENT /NORESTART"
   if data[arg]["installer"] == "installshield":
-    os.system("cmd /c start {} /s".format(file_path(arg)))
+    os.system(f"cmd /c start {file_path(arg)} /s"
   if data[arg]["installer"] == "nsis":
-    os.system("cmd /c start {} /S".format(file_path(arg)))
+    os.system(f"cmd /c start {file_path(arg)} /S"
   if data[arg]["installer"] == "squirrel":
-    os.system("cmd /c start {} -s".format(file_path(arg)))
+    os.system(f"cmd /c start {file_path(arg)} -s"
 
 def file_path(arg):
   return folder_name + wget.filename_from_url(download_link(arg))
@@ -98,7 +98,7 @@ def schedule():
       sc = "ONSTART"
     if args.schedule == "onidle":
       sc = "ONIDLE"
-    os.system("cmd /c schtasks /create /sc {} /mo {} /tn WinApt /tr start {}WinApt.exe {}".format(sc, mo, folder_name, " ".join(args.package)))
+    os.system(f"cmd /c schtasks /create /sc {sc} /mo {mo} /tn WinApt /tr start {folder_name}WinApt.exe {" ".join(args.package)}"
 
 def deploy():
   for package in data if args.all or args.list else data and args.package:
@@ -121,7 +121,7 @@ def deploy():
           install(package)
     except AttributeError:
       if args.quiet:
-        print("\n{} not found.".format(package))
+        print(f"\n{package} not found."
       else: pass
 
 if __name__ == "__main__":
