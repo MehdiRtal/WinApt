@@ -2,8 +2,7 @@
   "spotify": {
     "downloader": "custom",
     "url": "https://download.spotify.com/SpotifyFullSetup.exe",
-    "installer": "custom",
-    "arguments": "/extract \"C:\\Program Files\\Spotify\""
+    "installer": "installshield",
   },
   "anydesk": {
     "downloader": "filehippo",
@@ -100,5 +99,16 @@
     "id": "equalizer_apo",
     "installer": "zip",
     "filename": "EqualizerAPO64-1.2.1.exe"
+  },
+  "docker": {
+    "downloader": "filehippo",
+    "id": "docker-desktop",
+    "installer": "custom",
+    "arguments": "install --quiet"
+  },
+  "git": {
+    "downloader": "filehippo",
+    "id": "git",
+    "installer": "innosetup",
   }
 }
