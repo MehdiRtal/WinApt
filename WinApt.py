@@ -5,7 +5,7 @@ import os
 import argparse
 import zipfile
 from bs4 import BeautifulSoup
-.
+
 parser = argparse.ArgumentParser()
 parser.add_argument("package", nargs="*", help="Download and install a package.")
 parser.add_argument("-all", action="store_true", help="Download and install all packages.")
