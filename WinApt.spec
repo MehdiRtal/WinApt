@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(
-    ['WingetInstaller.py'],
+    ['WinApt.py'],
     pathex=[],
     binaries=[],
     datas=[],
@@ -27,7 +27,7 @@ exe = EXE(
     a.zipfiles,
     a.datas,
     [],
-    name='WingetInstaller',
+    name='WinApt',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
