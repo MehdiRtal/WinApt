@@ -3,7 +3,7 @@ name: WinApt
 on:
   push:
     paths:
-      - "WinApt.py"
+      - "${{ github.workflow }}.py"
 
 jobs:
   build:
